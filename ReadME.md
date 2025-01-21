@@ -149,4 +149,4 @@ The uploaded CSV must contain the following columns:
 
 ## Author
 
-Developed by [Praveen Shukla].
+Developed by Praveen Shukla.
