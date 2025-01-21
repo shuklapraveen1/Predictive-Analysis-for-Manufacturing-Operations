@@ -18,7 +18,6 @@ def train_model(data):
     y = data["Downtime_Flag"]
     #Splitting dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    #Training Logistic Regression model
     model = LogisticRegression(random_state=42)
     model.fit(X_train, y_train)
     # Evaluate the model
@@ -30,8 +29,7 @@ def train_model(data):
         pickle.dump(model, f)
 
     return accuracy, f1
-
-
+    
 @predictive_analysis.route('/upload', methods=['POST'])
 def upload_data():
     file = request.files.get('file')
@@ -40,7 +38,6 @@ def upload_data():
 
     try:
         df = pd.read_csv(file)
-
         required_columns = {"Machine_ID", "Temperature", "Run_Time", "Downtime_Flag"}
         if not required_columns.issubset(df.columns):
             return jsonify({
@@ -76,12 +73,9 @@ def predict():
 
         if temperature is None or run_time is None:
             return jsonify({"error": "Both 'Temperature' and 'Run_Time' are required fields."}), 400
-
         input_data = np.array([[temperature, run_time]])
-
         prediction = model.predict(input_data)
         confidence = model.predict_proba(input_data).max()
-
         result = {
             "Downtime": "Yes" if prediction[0] == 1 else "No",
             "Confidence": round(confidence, 2)
