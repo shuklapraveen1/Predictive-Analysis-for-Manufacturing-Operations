@@ -1,0 +1,1 @@
+curl -X POST -F "file=@C:/Users/shukl/Downloads/machine_downtime_data.csv" http://127.0.0.1:5000/upload
